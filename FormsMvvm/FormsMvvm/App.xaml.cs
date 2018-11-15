@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,17 +18,17 @@ namespace FormsMvvm
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            Trace.WriteLine($"{GetType().Name} {MethodBase.GetCurrentMethod().Name}");
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            Trace.WriteLine($"{GetType().Name} {MethodBase.GetCurrentMethod().Name}");
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            Trace.WriteLine($"{GetType().Name} {MethodBase.GetCurrentMethod().Name}");
         }
     }
 }
