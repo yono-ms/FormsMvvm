@@ -67,9 +67,10 @@ namespace FormsMvvm
         public string Description { get; } = "サーバーを利用するにはAPIキーが必要です。";
         public string ApiKeyPlaceholder { get; } = "APIキー";
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_ClickedAsync(object sender, EventArgs e)
         {
             Preferences.Set(nameof(ApiKey), ApiKey);
+            await Navigation.PushAsync(new ListPage(), true);
         }
     }
 }
