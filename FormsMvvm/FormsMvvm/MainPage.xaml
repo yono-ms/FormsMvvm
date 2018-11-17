@@ -9,7 +9,11 @@
     <Grid BindingContext="{x:Reference contentPage}">
         <StackLayout Margin="16">
             <Label Text="{Binding Description}" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Entry Placeholder="{Binding ApiKeyPlaceholder}" Text="{Binding ApiKey}"/>
+            <Entry Placeholder="{Binding ApiKeyPlaceholder}" Text="{Binding ApiKey}">
+                <Entry.Effects>
+                    <local:EntryEffect/>
+                </Entry.Effects>
+            </Entry>
             <Label Text="{Binding ApiKeyError}" TextColor="Red" FontSize="Small"/>
             <Button Text="{Binding CommitLabel}" IsEnabled="{Binding CanCommit}" Clicked="Button_ClickedAsync"/>
 
