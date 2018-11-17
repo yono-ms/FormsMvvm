@@ -2,20 +2,28 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FormsMvvm.ListPage"
-             x:Name="contentPage">
+             x:Name="contentPage"
+             Title="Gourmet">
     <ContentPage.Content>
         <Grid BindingContext="{x:Reference contentPage}">
             <StackLayout>
                 <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsError}" TextColor="Red" FontSize="Micro"/>
-                <StackLayout>
+                <StackLayout Orientation="Horizontal" BackgroundColor="LightYellow">
                     <Label Text="{Binding Path=ResultsAvailable, StringFormat='Available {0}'}"/>
                     <Label Text="{Binding Path=ResultsReturned, StringFormat='Returned {0}'}"/>
-                    <Label Text="{Binding Path=ResultsStart, StringFormat='Start {0}'}"/>
+                    <Label Text="{Binding Path=ResultsStart, StringFormat='Start {0}'}" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
-                <ListView ItemsSource="{Binding Items}" Footer="FOOT" Header="HEAD">
+                <ListView ItemsSource="{Binding Items}"
+                          IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                          IsPullToRefreshEnabled="True"
+                          Refreshing="ListView_RefreshingAsync"
+                          Header="検索結果"
+                          Footer="NEXT">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
-                            <Label Text="{Binding}" BackgroundColor="AliceBlue"/>
+                            <StackLayout BackgroundColor="AliceBlue">
+                                <Label Text="{Binding}" HorizontalOptions="Center"/>
+                            </StackLayout>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
@@ -30,16 +38,16 @@
                                         <ColumnDefinition Width="100"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding Path=logo_image}"/>
-                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=name}" FontSize="Default"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Path=station_name}" FontSize="Micro"/>
+                                    <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding Path=photo.pc.l}"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=name}" TextColor="Black" FontSize="Default"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Path=station_name}" TextColor="Gray" FontSize="Micro"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                     <ListView.FooterTemplate>
                         <DataTemplate>
-                            <Button Text="{Binding}" BackgroundColor="AliceBlue"/>
+                            <Button Text="{Binding}" BackgroundColor="AliceBlue" Clicked="Button_Clicked"/>
                         </DataTemplate>
                     </ListView.FooterTemplate>
                 </ListView>

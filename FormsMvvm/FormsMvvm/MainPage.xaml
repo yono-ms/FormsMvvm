@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FormsMvvm"
              x:Class="FormsMvvm.MainPage"
-             x:Name="contentPage">
+             x:Name="contentPage"
+             Title="FormsMvvm">
 
     <Grid BindingContext="{x:Reference contentPage}">
         <StackLayout Margin="16">
