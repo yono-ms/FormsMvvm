@@ -21,9 +21,16 @@ namespace FormsMvvm
 		{
 			InitializeComponent ();
 
-            ApiKey = Preferences.Get(nameof(ApiKey), string.Empty);
-            Keyword = Preferences.Get(nameof(Keyword), @"横浜");
-		}
+            try
+            {
+                ApiKey = Preferences.Get(nameof(ApiKey), string.Empty);
+                Keyword = Preferences.Get(nameof(Keyword), @"横浜");
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"{GetType()} ctor {ex.ToString()}");
+            }
+        }
 
         protected override void OnAppearing()
         {

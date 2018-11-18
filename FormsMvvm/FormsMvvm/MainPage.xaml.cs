@@ -18,7 +18,14 @@ namespace FormsMvvm
         {
             InitializeComponent();
 
-            ApiKey = Preferences.Get(nameof(ApiKey), string.Empty);
+            try
+            {
+                ApiKey = Preferences.Get(nameof(ApiKey), string.Empty);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"{GetType()} ctor {ex.ToString()}");
+            }
         }
 
         protected override void OnAppearing()
