@@ -30,12 +30,41 @@ namespace FormsMvvm.Droid
                 return;
             }
 
+            // 復元用
             background = editText.Background;
+
+#if ENTRY_COLOR_WIDTH
+
+            // 色と太さを変えるバージョン
+            var gradientDrawableFocused = new GradientDrawable();
+            gradientDrawableFocused.SetColor(0);
+            gradientDrawableFocused.SetStroke(8, Android.Graphics.Color.Green);
+            gradientDrawableFocused.SetCornerRadius(16);
+
+            var gradientDrawableDefault = new GradientDrawable();
+            gradientDrawableDefault.SetColor(0);
+            gradientDrawableDefault.SetStroke(2, Android.Graphics.Color.Gray);
+            gradientDrawableDefault.SetCornerRadius(4);
+
+            var stateListDrawable = new StateListDrawable();
+            stateListDrawable.AddState(new int[] { Android.Resource.Attribute.StateFocused }, gradientDrawableFocused);
+            stateListDrawable.AddState(Android.Util.StateSet.WildCard.ToArray(), gradientDrawableDefault);
+            editText.SetBackground(stateListDrawable);
+
+#else
+
+            // 色だけ変えるバージョン
+            var colors = new int[] { Android.Graphics.Color.Blue, Android.Graphics.Color.Gray };
+            var states = new int[][] { new int[] { Android.Resource.Attribute.StateFocused }, Android.Util.StateSet.WildCard.ToArray() };
+            var colorStateList = new ColorStateList(states, colors);
+
             var gradientDrawable = new GradientDrawable();
             gradientDrawable.SetColor(0);
-            gradientDrawable.SetStroke(2, Android.Graphics.Color.Gray);
+            gradientDrawable.SetStroke(2, colorStateList);
             gradientDrawable.SetCornerRadius(4);
             editText.SetBackground(gradientDrawable);
+
+#endif
         }
 
         protected override void OnDetached()
