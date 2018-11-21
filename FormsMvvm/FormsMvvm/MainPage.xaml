@@ -16,6 +16,7 @@
             </Entry>
             <Label Text="{Binding ApiKeyError}" TextColor="Red" FontSize="Small"/>
             <Button Text="{Binding CommitLabel}" IsEnabled="{Binding CanCommit}" Clicked="Button_ClickedAsync"/>
+            <local:CustomButton/>
 
         </StackLayout>
     </Grid>

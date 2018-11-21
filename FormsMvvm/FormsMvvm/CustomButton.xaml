@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FormsMvvm"
+             xmlns:sk="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             x:Class="FormsMvvm.CustomButton"
+             x:Name="contentView">
+  <ContentView.Content>
+      <Grid BindingContext="{x:Reference contentView}">
+            <Grid.Effects>
+                <local:TouchEffect Capture="True" TouchAction="TouchEffect_TouchAction"/>
+            </Grid.Effects>
+            <sk:SKCanvasView x:Name="canvasView" PaintSurface="SKCanvasView_PaintSurface" EnableTouchEvents="True" Touch="SKCanvasView_Touch">
+            </sk:SKCanvasView>
+            <Label Text="Hello Xamarin.Forms!" />
+      </Grid>
+  </ContentView.Content>
+</ContentView>

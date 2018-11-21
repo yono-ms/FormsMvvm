@@ -128,6 +128,7 @@ async/awaitを使用していればUIに戻る。
 
 awaitしないのでコンストラクタでも使える。
 ただしコンストラクタでGetするとデザイナが例外になる。
+これはtry/catchしておけば回避できる。
 
 ## ContentPageコンストラクタ
 
@@ -140,7 +141,9 @@ awaitしないのでコンストラクタでも使える。
 揮発引数を使用したければ、
 コンストラクタ後にプロパティをセットしてからPushAsyncする。
 
-## Effect
+## カスタムコントロール
+
+### Effect
 
 プラットフォーム固有の描画を調整することができる。
 Entryの場合iOS/UWPは枠線でAndroidは下線となっている。
@@ -157,3 +160,41 @@ Effectが存在しないiOSは無視されるため枠線表示のままとなる。
 Androidの下線を枠線に切り替える場合は、
 Effectの中でコードで描画することもできる。
 プラットフォームリソースでxmlを使用することも可能。
+
+## タッチイベント
+
+### 吊るしのイベント
+
+#### GestureRecognizer Class
+
+https://docs.microsoft.com/ja-jp/dotnet/api/xamarin.forms.gesturerecognizer?view=xamarin-forms
+
+- Xamarin.Forms.ClickGestureRecognizer
+- Xamarin.Forms.PanGestureRecognizer
+- Xamarin.Forms.PinchGestureRecognizer
+- Xamarin.Forms.SwipeGestureRecognizer
+- Xamarin.Forms.TapGestureRecognizer
+
+#### Press/Release
+
+5種類のイベントがあるが、
+よく見るとPress/Releaseが無い。
+Button以外のコントロールにPress/Releaseが無い理由はこれか。
+
+### Press/Releaseを検出する方法
+
+#### 効果からのイベントの呼び出し
+
+https://docs.microsoft.com/ja-jp/xamarin/xamarin-forms/app-fundamentals/effects/touch-tracking
+
+#### 製造コスト
+
+上記サンプルを見ると、
+これは提供されるべき機能であって自分で作る機能ではない、
+ということがわかる。
+こんなものを書いているようではFormsを選択した意味がない。
+
+### Press/Releaseの必要性とは
+
+発端は押下時イメージを通常時イメージとは切り替えることだった。
+よく考えてみるとイベントはClick(Tap)で良くてアニメーションさえ実現できれば問題ない。
