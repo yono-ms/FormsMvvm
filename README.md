@@ -213,3 +213,10 @@ https://docs.microsoft.com/ja-jp/xamarin/xamarin-forms/user-interface/graphics/s
 おなじみのTaskDelayとInvalidateSurfaceで実現する。
 カスタムコントロールのアニメ化するプロパティの
 テンポラリ値を用意して描画させるとアニメーションになる。
+
+## フルカスタムコントロール
+
+skiaでcanvasにdrawする形式でコントロールを作れる。
+SKCanvasを継承してcsだけで作るとタッチイベントも正常動作するらしい。
+contentViewから作るよりも、
+こっちの方が逆にコストがかからないような気がする。
