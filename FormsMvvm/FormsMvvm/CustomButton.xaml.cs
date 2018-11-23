@@ -15,7 +15,10 @@ namespace FormsMvvm
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CustomButton : ContentView
 	{
-        public bool IsPressed { get; set; }
+        public bool InProgress { get; set; }
+
+        public float RadiusDefault { get; set; }
+        public float Radius { get; set; }
 
         public CustomButton ()
 		{
@@ -29,43 +32,86 @@ namespace FormsMvvm
             SKSurface surface = e.Surface;
             SKCanvas canvas = surface.Canvas;
 
+            RadiusDefault = Math.Max(info.Width, info.Height) / 2;
+            if (Radius == 0)
+            {
+                Radius = RadiusDefault;
+            }
+
             canvas.Clear();
 
-            var paint = new SKPaint
+            using (var paint = new SKPaint())
             {
-                Style = SKPaintStyle.Stroke,
-                Color = IsPressed ? Color.Red.ToSKColor() : Color.Pink.ToSKColor(),
-                StrokeWidth = 25
-            };
-            canvas.DrawCircle(info.Width / 2, info.Height / 2, info.Height / 2, paint);
-        }
-
-        private void SKCanvasView_Touch(object sender, SKTouchEventArgs e)
-        {
-            // Androidでは動作しない
-            // UWPではPresseは発生するがReleaseが発生しない
-            Trace.WriteLine($"{GetType().Name} SKCanvasView_Touch {e.ActionType}");
-        }
-
-        private void TouchEffect_TouchAction(object sender, TouchActionEventArgs args)
-        {
-            // 超高コストタッチイベント
-            Trace.WriteLine($"{GetType().Name} TouchEffect_TouchAction {args.Type}");
-            switch (args.Type)
-            {
-                case TouchActionType.Pressed:
-                    IsPressed = true;
-                    canvasView.InvalidateSurface();
-                    break;
-
-                case TouchActionType.Released:
-                    IsPressed = false;
-                    canvasView.InvalidateSurface();
-                    break;
-
-                default:
-                    break;
+                paint.Shader = SKShader.CreateRadialGradient(
+                                new SKPoint(info.Rect.MidX, info.Rect.MidY),
+                                Radius,
+                                new SKColor[] { SKColors.LightBlue, IsEnabled ? SKColors.CadetBlue : SKColors.LightGray },
+                                null,
+                                SKShaderTileMode.Clamp);
+                canvas.DrawRect(info.Rect, paint);
             }
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Trace.WriteLine($"{GetType().Name} TapGestureRecognizer_Tapped");
+
+            if(IsEnabled)
+            {
+                StartAnimationAsync();
+            }
+            else
+            {
+                Trace.WriteLine($" ignore. enabled={IsEnabled}");
+            }
+        }
+
+        private async void StartAnimationAsync()
+        {
+            Trace.WriteLine($"{GetType().Name} StartAnimationAsync");
+
+            if (InProgress)
+            {
+                Trace.WriteLine($" is busy.");
+            }
+
+            try
+            {
+                InProgress = true;
+
+                var quotient = RadiusDefault / 10;
+
+                Radius = 0;
+                while (Radius < (quotient * 10))
+                {
+                    Radius += quotient;
+                    canvasView.InvalidateSurface();
+                    await Task.Delay(TimeSpan.FromMilliseconds(20));
+                    Trace.WriteLine($" wake up. {Radius}");
+                }
+                Radius = RadiusDefault;
+                canvasView.InvalidateSurface();
+
+                Clicked?.Invoke(this, new EventArgs());
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"{GetType().Name} TapGestureRecognizer_Tapped : {ex.ToString()}");
+            }
+            finally
+            {
+                InProgress = false;
+            }
+        }
+
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        public static readonly BindableProperty TextProperty = BindableProperty.Create("Text", typeof(string), typeof(CustomButton), null);
+
+        public event EventHandler Clicked;
     }
 }

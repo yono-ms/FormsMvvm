@@ -5,14 +5,16 @@
              xmlns:sk="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              x:Class="FormsMvvm.CustomButton"
              x:Name="contentView">
-  <ContentView.Content>
-      <Grid BindingContext="{x:Reference contentView}">
-            <Grid.Effects>
-                <local:TouchEffect Capture="True" TouchAction="TouchEffect_TouchAction"/>
-            </Grid.Effects>
-            <sk:SKCanvasView x:Name="canvasView" PaintSurface="SKCanvasView_PaintSurface" EnableTouchEvents="True" Touch="SKCanvasView_Touch">
-            </sk:SKCanvasView>
-            <Label Text="Hello Xamarin.Forms!" />
-      </Grid>
-  </ContentView.Content>
+    <ContentView.Resources>
+        <local:EnableColorConvertor x:Key="enableConvertor"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid BindingContext="{x:Reference contentView}">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </Grid.GestureRecognizers>
+            <sk:SKCanvasView x:Name="canvasView" IsEnabled="{Binding IsEnabled}" PaintSurface="SKCanvasView_PaintSurface"/>
+            <Label Text="{Binding Text}" TextColor="{Binding IsEnabled, Converter={StaticResource enableConvertor}}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+        </Grid>
+    </ContentView.Content>
 </ContentView>

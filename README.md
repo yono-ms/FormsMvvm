@@ -198,3 +198,18 @@ https://docs.microsoft.com/ja-jp/xamarin/xamarin-forms/app-fundamentals/effects/
 
 発端は押下時イメージを通常時イメージとは切り替えることだった。
 よく考えてみるとイベントはClick(Tap)で良くてアニメーションさえ実現できれば問題ない。
+
+### 吊るし以外のアニメーション
+
+吊るしのアニメーションが用意されている。
+
+https://docs.microsoft.com/ja-jp/xamarin/xamarin-forms/user-interface/animation/simple
+
+汎用的なプロパティアニメーションを実現する方法は、
+手作りということになるらしい。
+
+https://docs.microsoft.com/ja-jp/xamarin/xamarin-forms/user-interface/graphics/skiasharp/basics/animation
+
+おなじみのTaskDelayとInvalidateSurfaceで実現する。
+カスタムコントロールのアニメ化するプロパティの
+テンポラリ値を用意して描画させるとアニメーションになる。
