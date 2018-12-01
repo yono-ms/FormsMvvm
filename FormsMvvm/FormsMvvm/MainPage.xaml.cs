@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -79,5 +80,7 @@ namespace FormsMvvm
             Preferences.Set(nameof(ApiKey), ApiKey);
             await Navigation.PushAsync(new ListPage(), true);
         }
+
+        public ImageSource Source { get; } = ImageSource.FromResource("FormsMvvm.img1.jpg");
     }
 }

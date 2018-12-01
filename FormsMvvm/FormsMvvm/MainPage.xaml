@@ -7,6 +7,7 @@
              Title="FormsMvvm">
 
     <Grid BindingContext="{x:Reference contentPage}">
+        <Image Source="{Binding Source}" Aspect="AspectFill"/>
         <StackLayout Margin="16">
             <Label Text="{Binding Description}" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
             <Entry Placeholder="{Binding ApiKeyPlaceholder}" Text="{Binding ApiKey}">
@@ -18,6 +19,7 @@
             <Button Text="{Binding CommitLabel}" IsEnabled="{Binding CanCommit}" Clicked="Button_ClickedAsync"/>
             <local:CustomButton Text="{Binding CommitLabel}" IsEnabled="{Binding CanCommit}" Clicked="Button_ClickedAsync"/>
             <local:RadialButton Text="{Binding CommitLabel}" IsEnabled="{Binding CanCommit}" CenterColor="Yellow" EdgeColor="Green" Clicked="Button_ClickedAsync"/>
+            <local:BlurCard Source="{Binding Source}" />
 
         </StackLayout>
     </Grid>
