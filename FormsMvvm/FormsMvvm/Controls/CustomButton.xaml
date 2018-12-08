@@ -6,7 +6,7 @@
              x:Class="FormsMvvm.CustomButton"
              x:Name="contentView">
     <ContentView.Resources>
-        <local:EnableColorConvertor x:Key="enableConvertor"/>
+        <local:EnableColorConverter x:Key="enableConverter"/>
     </ContentView.Resources>
     <ContentView.Content>
         <Grid BindingContext="{x:Reference contentView}">
@@ -14,7 +14,7 @@
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Grid.GestureRecognizers>
             <sk:SKCanvasView x:Name="canvasView" IsEnabled="{Binding IsEnabled}" PaintSurface="SKCanvasView_PaintSurface"/>
-            <Label Text="{Binding Text}" TextColor="{Binding IsEnabled, Converter={StaticResource enableConvertor}}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            <Label Text="{Binding Text}" TextColor="{Binding IsEnabled, Converter={StaticResource enableConverter}}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
         </Grid>
     </ContentView.Content>
 </ContentView>
