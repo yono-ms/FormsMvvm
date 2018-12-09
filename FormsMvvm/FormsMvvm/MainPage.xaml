@@ -20,6 +20,7 @@
             <local:CustomButton Text="{Binding CommitLabel}" IsEnabled="{Binding CanCommit}" Clicked="Button_ClickedAsync"/>
             <local:RadialButton Text="{Binding CommitLabel}" IsEnabled="{Binding CanCommit}" CenterColor="Yellow" EdgeColor="Green" Clicked="Button_ClickedAsync"/>
             <local:BlurCard Source="{Binding Source}" />
+            <local:MButton Text="日本語を使える" Clicked="Button_ClickedAsync"/>
 
         </StackLayout>
     </Grid>
