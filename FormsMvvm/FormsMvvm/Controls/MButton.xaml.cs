@@ -64,6 +64,8 @@ namespace FormsMvvm
                     Trace.WriteLineIf(IsTrace, $"{GetType().Name} {MethodBase.GetCurrentMethod().Name} {e.ActionType}");
                     break;
             }
+
+            e.Handled = true;
         }
 
         private void SKCanvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)

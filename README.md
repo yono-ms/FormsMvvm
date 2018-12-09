@@ -181,6 +181,10 @@ https://docs.microsoft.com/ja-jp/dotnet/api/xamarin.forms.gesturerecognizer?view
 よく見るとPress/Releaseが無い。
 Button以外のコントロールにPress/Releaseが無い理由はこれか。
 
+(追記)
+
+SKCanvasViewのTouchイベントで全種類判定可能。
+
 ### Press/Releaseを検出する方法
 
 #### 効果からのイベントの呼び出し
