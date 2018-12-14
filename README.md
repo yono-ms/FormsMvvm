@@ -177,6 +177,10 @@ https://docs.microsoft.com/ja-jp/dotnet/api/xamarin.forms.gesturerecognizer?view
 - Xamarin.Forms.SwipeGestureRecognizer
 - Xamarin.Forms.TapGestureRecognizer
 
+GestureはZ軸上で上の要素に取られるため、
+上下は部品側実装で左右は土台側実装、
+といった設計では実現可能か検証が必要。
+
 #### Press/Release
 
 5種類のイベントがあるが、
