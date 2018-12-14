@@ -271,3 +271,17 @@ iosみたいにアラート以外ぼかしたい場合はどうなるか。
 
 ここまででコストを使い果たしたので続きはまた次回。
 
+## ICommand
+
+VMにICommand継承クラスを作って実体化してバインドする。
+という手順をよく見るが、Formsにはシンプルな使い方が用意されている。
+
+- Command型プロパティを用意
+- CanExecuteとExecuteを実装
+- xamlでCommandをバインド
+- 必要に応じてCommandParameterをバインド
+- 活性条件の状態変化時にはChangeCanExecuteを実行
+
+CommandParameterはCanExecute時にもExecute時にも渡される。
+ViewModel内の複合条件判定可能だが、
+CommandParameterを使用して活性判定することもできる。

@@ -66,7 +66,7 @@ namespace FormsMvvm
         public string ApiKeyError
         {
             get { return _ApiKeyError; }
-            set { _ApiKeyError = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanCommit)); }
+            set { _ApiKeyError = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanCommit)); TestCommand.ChangeCanExecute(); }
         }
 
         public bool CanCommit => string.IsNullOrEmpty(ApiKeyError);
@@ -82,5 +82,14 @@ namespace FormsMvvm
         }
 
         public ImageSource Source { get; } = ImageSource.FromResource("FormsMvvm.img1.jpg");
+
+        public Command TestCommand => new Command((arg) =>
+        {
+            Button_ClickedAsync(this, new EventArgs());
+        }, (arg) =>
+        {
+            var errors = arg as string;
+            return string.IsNullOrEmpty(errors);
+        });
     }
 }
