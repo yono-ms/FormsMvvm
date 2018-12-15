@@ -291,3 +291,52 @@ VMにICommand継承クラスを作って実体化してバインドする。
 CommandParameterはCanExecute時にもExecute時にも渡される。
 ViewModel内の複合条件判定可能だが、
 CommandParameterを使用して活性判定することもできる。
+
+### Commandの動作状況
+
+以下の制限事項が存在する。
+
+- CanExecute発生条件
+  - CommandParameterに値設定
+  - バインドの場合は状変で発生
+
+よってCanExecuteを使用する前提では、
+CommandParameterはボタンタグとして使用できない。
+タグが変われば活性条件も違うため問題とならないのか。
+
+#### 使い方の整理
+
+- 常に活性単品ボタン
+
+```
+public Command (Action execute);
+```
+
+- 常に活性ボタンのボタン区別
+  - CommandParameterにタグ付け
+
+```
+public Command (Action<object> execute);
+```
+
+- 外部ソースによる非活性制御ボタン
+  - CommandParameter無しでは活性イベント発生しないため**使用できない**
+
+```
+public Command (Action execute, Func<bool> canExecute);
+```
+
+- 非活性制御ボタン
+  - CommandParameterに活性ソースをバインド
+  - 活性ソースは1個しか指定できない
+  - 1個で判定可能な場合は実装時にコンバートできる
+
+```
+  public Command (Action<object> execute, Func<object,bool> canExecute);
+```
+
+#### CanExecuteChangedの罠
+
+上記の動作条件を守っても、
+ChangeCanExecuteでCanExecuteChangedは発生しない。
+バグなのかCommand継承クラス用なのか。

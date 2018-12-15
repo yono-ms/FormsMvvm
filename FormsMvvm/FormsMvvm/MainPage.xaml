@@ -22,6 +22,10 @@
             <local:BlurCard Source="{Binding Source}" />
             <local:MButton Text="日本語を使える" Clicked="Button_ClickedAsync"/>
             <Button Text="TestCommandをバインド" Command="{Binding TestCommand}" CommandParameter="{Binding ApiKeyError}"/>
+            <StackLayout Orientation="Horizontal">
+                <local:MyBoxView Command="{Binding MyBoxCommand4}" CommandParameter="{Binding CanCommit}" />
+
+            </StackLayout>
 
         </StackLayout>
     </Grid>

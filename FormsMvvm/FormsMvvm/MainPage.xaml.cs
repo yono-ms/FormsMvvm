@@ -27,6 +27,12 @@ namespace FormsMvvm
             {
                 Trace.WriteLine($"{GetType()} ctor {ex.ToString()}");
             }
+
+            MyBoxCommand4.CanExecuteChanged += (s, e) =>
+            {
+                // ここは永久に発生しない
+                Trace.WriteLine($"{GetType().Name} CanExecuteChanged");
+            };
         }
 
         protected override void OnAppearing()
@@ -66,7 +72,20 @@ namespace FormsMvvm
         public string ApiKeyError
         {
             get { return _ApiKeyError; }
-            set { _ApiKeyError = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanCommit)); TestCommand.ChangeCanExecute(); }
+            set
+            {
+                _ApiKeyError = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanCommit));
+                TestCommand.ChangeCanExecute();
+                // 123は意味がない
+                //MyBoxCommand1.ChangeCanExecute();
+                //MyBoxCommand2.ChangeCanExecute();
+                //MyBoxCommand3.ChangeCanExecute();
+                // 4だけ意味を持つが実際には不要
+                // CanExecuteChangedは使わずCommandParameterのchangedを使っているらしい
+                //MyBoxCommand4.ChangeCanExecute();
+            }
         }
 
         public bool CanCommit => string.IsNullOrEmpty(ApiKeyError);
@@ -90,6 +109,41 @@ namespace FormsMvvm
         {
             var errors = arg as string;
             return string.IsNullOrEmpty(errors);
+        });
+
+        public Command MyBoxCommand1 => new Command(() =>
+        {
+            // 常に活性単品ボタン
+            Trace.WriteLine($"{GetType().Name} MyBoxCommand1 Execute");
+        });
+
+        public Command MyBoxCommand2 => new Command((arg) =>
+        {
+            // 常に活性ボタンのボタン区別
+            Trace.WriteLine($"{GetType().Name} MyBoxCommand2 Execute {arg}");
+        });
+
+        public Command MyBoxCommand3 => new Command(() =>
+        {
+            Trace.WriteLine($"{GetType().Name} MyBoxCommand3 Execute");
+        }, ()=>
+        {
+            // CommandParameterを指定しない場合ここは永久に来ない
+            // つまり使えない
+            Trace.WriteLine($"{GetType().Name} MyBoxCommand3 CanExecute");
+            return CanCommit;
+        });
+
+        public Command MyBoxCommand4 => new Command((arg) =>
+        {
+            Trace.WriteLine($"{GetType().Name} MyBoxCommand4 Execute {arg}");
+        }, (arg) =>
+        {
+            // CommandParameterが固定値の場合一度だけ発生する
+            // CommandParameterがCanExecuteに関連するバインドの場合は都度発生する
+            Trace.WriteLine($"{GetType().Name} MyBoxCommand4 CanExecute {arg}");
+            // argを無視しても良い
+            return CanCommit;
         });
     }
 }
